@@ -1,2 +1,2 @@
-# AdventOfCode2015
+# Advent Of Code 2015
 My solutions for Advent Of Code 2015
