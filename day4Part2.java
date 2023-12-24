@@ -12,8 +12,8 @@ public class day4Part2 {
             String hash = getMd5Hash(toHash); // hash result
 
             if(hash.startsWith(String.format("%0" + targetZeroes + "d", 0))){ // if string starts with 6 zeroes
-                System.out.println("HashCode" + hash); // print the hashcode
-                System.out.println("Number"+ number); // print the concatenated number
+                System.out.println("HashCode " + hash); // print the hashcode
+                System.out.println("Number "+ number); // print the concatenated number
                 break; // leave the while loop
             }
             number++; // otherwise, increase number
