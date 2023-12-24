@@ -29,26 +29,26 @@ public class day3Part3 {
         return inputString;
     }
     public static int newHouses(String input){
-        int counter = 1;
-        int x=0;
+        int counter = 1; // start santa at the first hosue
+        int x=0; 
         int y=0;
         List<List<Integer>> visited = new ArrayList<>();
-        List<Integer> initial = new ArrayList<>();
+        List<Integer> initial = new ArrayList<>(); // first position
         initial.add(0);
         initial.add(0);
         visited.add(initial);
         for(int i=0; i<input.length(); i++){
-            char symbol = input.charAt(i);
+            char symbol = input.charAt(i); // increase the visited set according to where santa is
             if(symbol == '^'){y++;}
             if(symbol == 'v'){y--;}
             if(symbol == '>'){x++;}
             if(symbol == '<'){x--;}
 
-            List<Integer> house = new ArrayList<>();
+            List<Integer> house = new ArrayList<>(); // make the new house
             house.add(x);
             house.add(y);
 
-            if(!visited.contains(house)){
+            if(!visited.contains(house)){ // see if the house is new or not
                 counter++;
                 visited.add(house);
             }
