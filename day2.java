@@ -26,22 +26,22 @@ public class day2 {
 
         String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day2Input.txt"; // save the filepath to a string;
 
-        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){
-            String line;
-            while((line = reader.readLine()) != null){
-                String[] dimensions = line.split("x");
-                List<Integer> dimensionValues = new ArrayList<>();
+        try(BufferedReader reader = new BufferedReader(new FileReader(filePath))){ // Try to open the file with the buffered reader
+            String line; // buffered reader goes line by line
+            while((line = reader.readLine()) != null){ // while the buffered reader isn't at the end of the file
+                String[] dimensions = line.split("x"); // split the string into an array of dimensions the numbers are separated by x
+                List<Integer> dimensionValues = new ArrayList<>(); // create a list of integers called dimension values
 
                 for(String dimension: dimensions){
-                    dimensionValues.add(Integer.parseInt(dimension));
+                    dimensionValues.add(Integer.parseInt(dimension)); // for every string dimension make a new a List of integers typecast into INTEGERS
                 }
 
-                dimensionsList.add(dimensionValues);
+                dimensionsList.add(dimensionValues); // add the arrayList of dimensions to the entire arrayList now
             }
-        } catch (IOException e){
+        } catch (IOException e){ // if the buffered reader fails
             e.printStackTrace();
         }
-        return dimensionsList;
+        return dimensionsList; // return the arrayList of Lists of integers
     }
 
     public static double wrappingSize(int length, int width, int height) {
@@ -49,9 +49,9 @@ public class day2 {
         double side1 = length*width;
         double side2 = length*height;
         double side3 = width*height;
-        double surfaceArea = 2*(side1+side2+side3);
-        double smallestSide = Math.min(Math.min(side1,side2),side3);
-        wrappingPaper = surfaceArea+smallestSide;
+        double surfaceArea = 2*(side1+side2+side3); // Area of a rectangular prism formula
+        double smallestSide = Math.min(Math.min(side1,side2),side3); 
+        wrappingPaper = surfaceArea+smallestSide; // problem specification
         return wrappingPaper;
     }
     
