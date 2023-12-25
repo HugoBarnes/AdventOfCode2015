@@ -28,7 +28,7 @@ public class day4Part1 {
     private static String getMd5Hash(String input){
             try{ // try to call MD5 algo
                 MessageDigest md =MessageDigest.getInstance("MD5"); // call MD5 algo
-                byte[] MessageDigest = md.digest(input.getBytes()); // hash input string and save it into a byte array
+                byte[] MessageDigest = md.digest(input.getBytes()); // hash input string with MD5 aglo and save it into a byte array
                 BigInteger no = new BigInteger(1,MessageDigest); // Convert hash byte array into a big integer ; 1 is positive signum
                 String hashtext = no.toString(16);  // Convert bigInteger to a hexadecimal string
                 while(hashtext.length() <32){ // add leading zeroes if the hash is shorter than 32 characters
