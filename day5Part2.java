@@ -18,7 +18,6 @@ public class day5Part2 {
 
     public static List<String> handleInput(String fileString){
         List<String> niceList = new ArrayList<>();
-
         try(BufferedReader reader = new BufferedReader(new FileReader(fileString))){
             String line;
 
@@ -30,7 +29,6 @@ public class day5Part2 {
         }
         return niceList;
     }
-
     public static boolean twoPair(String str){
         for(int i=1; i<str.length(); i++){
                 String duplicate = str.substring(i-1, i+1);
@@ -40,7 +38,6 @@ public class day5Part2 {
         }
         return false;
     }
-
     public static boolean repeat(String str){
         for(int i=2; i<str.length(); i++){
             if(str.charAt(i-2)==str.charAt(i)){
