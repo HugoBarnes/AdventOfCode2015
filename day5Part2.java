@@ -15,7 +15,6 @@ public class day5Part2 {
                                     .count();
         System.out.println(niceListSize);
     }
-
     public static List<String> handleInput(String fileString){
         List<String> niceList = new ArrayList<>();
         try(BufferedReader reader = new BufferedReader(new FileReader(fileString))){
