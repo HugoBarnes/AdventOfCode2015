@@ -6,48 +6,48 @@ import java.util.ArrayList;
 
 public class day5Part2 {
     public static void main(String[] args){
-        List<String> input = handleInput();
-        long NiceListSize = input.stream().filter(day5Part2::isNice).count();
-        System.out.println(NiceListSize);
+        String fileString = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day5Input.txt";
+        List<String> niceList = handleInput(fileString);
+        System.out.println(niceList);
+        Long niceListSize = niceList.stream()
+                                    .filter(day5Part2:: twoPair) // two pair twice in reality*
+                                    .filter(day5Part2:: repeat) // repeat with a letter in between: x_x or aaa
+                                    .count();
+        System.out.println(niceListSize);
     }
 
-    public static List<String> handleInput(){
-        List<String> outputList = new ArrayList<>();
+    public static List<String> handleInput(String fileString){
+        List<String> niceList = new ArrayList<>();
 
-        String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day5Input.txt";
-
-        try(BufferedReader reader = new BufferedReader (new FileReader(filePath))){
+        try(BufferedReader reader = new BufferedReader(new FileReader(fileString))){
             String line;
-            while((line = reader.readLine())!= null){
-                outputList.add(line);
+
+            while((line=reader.readLine())!=null){
+                niceList.add(line);
             }
         } catch(IOException e){
             e.printStackTrace();
         }
-        return outputList;
+        return niceList;
     }
 
-    public static boolean isNice(String str) {
-        return hasRepeatingPairWithoutOverlap(str) && hasRepeatingLetterWithOneBetween(str);
+    public static boolean twoPair(String str){
+        for(int i=1; i<str.length(); i++){
+                String duplicate = str.substring(i-1, i+1);
+                if(str.substring(i+1, str.length()).contains(duplicate)){
+                    return true;
+                }
+        }
+        return false;
     }
 
-    private static boolean hasRepeatingPairWithoutOverlap(String str) {
-        for (int i = 0; i < str.length() - 2; i++) {
-            String pair = str.substring(i, i + 2);
-            if (str.substring(i + 2).contains(pair)) {
+    public static boolean repeat(String str){
+        for(int i=2; i<str.length(); i++){
+            if(str.charAt(i-2)==str.charAt(i)){
                 return true;
             }
         }
         return false;
     }
 
-    private static boolean hasRepeatingLetterWithOneBetween(String str) {
-        for (int i = 0; i < str.length() - 2; i++) {
-            if (str.charAt(i) == str.charAt(i + 2)) {
-                return true;
-            }
-        }
-        return false;
-    }
-    
 }
