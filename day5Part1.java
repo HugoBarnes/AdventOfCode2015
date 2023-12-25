@@ -10,7 +10,6 @@ public class day5Part1 {
         int numNice = numNice(inputString); // get the size of the nice list
         System.out.println(numNice); // return the size of the nice list
     }
-
     public static List<List<String>> handleInput() { // get the input data
         List<List<String>> list = new ArrayList<>();
         String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day5Input.txt";
@@ -26,7 +25,6 @@ public class day5Part1 {
         }
         return list;
     }
-
     public static int numNice(List<List<String>> input) {
         return (int) input.stream()
                           .flatMap(List::stream) // Flatten to stream of strings
@@ -35,7 +33,6 @@ public class day5Part1 {
                           .filter(day5Part1::doesNotContainDisallowedStrings) // does not contain smaller strings
                           .count(); // return the size
     }
-
     private static boolean hasEnoughVowels(String str) {
         long vowelCount = str.chars()
                              .mapToObj(c -> (char) c) // make each string a character
@@ -43,7 +40,6 @@ public class day5Part1 {
                              .count(); // count the number of vowels
         return vowelCount >= 3; // return number of strings with 3 or more vowels
     }
-
     private static boolean hasDuplicate(String str) {
         for (int i = 0; i < str.length() - 1; i++) { // go through string
             if (str.charAt(i) == str.charAt(i + 1)) { // see if the character equals character next to it
@@ -52,7 +48,6 @@ public class day5Part1 {
         }
         return false;
     }
-
     private static boolean doesNotContainDisallowedStrings(String str) {
         return !str.contains("ab") && !str.contains("cd") && !str.contains("pq") && !str.contains("xy"); // if contains any of these remove
     }
