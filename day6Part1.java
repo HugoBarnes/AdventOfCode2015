@@ -58,7 +58,7 @@ public class day6Part1 {
 
     public static List<List<Integer>> rectangle(List<String> input) {
         List<List<Integer>> rectangle = new ArrayList<>();
-        Pattern pattern   = Pattern.compile("\\d+");
+        Pattern pattern = Pattern.compile("\\d+");
 
         for(String current : input) {
             Matcher matcher = pattern.matcher(current);
