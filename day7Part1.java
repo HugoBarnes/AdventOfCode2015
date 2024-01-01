@@ -3,14 +3,11 @@ import java.util.*;
 import java.util.function.*;
 
 class day7Part1 {
-    // Main method
     public static void main(String[] args) {
         String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day7Input.txt";
         List<String> instructions = handleInput(filePath);
         System.out.println(followInstructions(instructions));
     }
-
-    // Method to read instructions from a file
     public static List<String> handleInput(String filePath) {
         List<String> instructions = new ArrayList<>();
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
