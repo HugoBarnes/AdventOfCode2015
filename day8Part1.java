@@ -6,9 +6,18 @@ public class day8Part1 {
     public static void main(String[] args) {
         String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day8Input.txt";
         List<String> santaList = handleInput(filePath);
+
         int totalCodeChars = calculateCodeCharacters(santaList);
+
+
         int totalMemoryChars = calculateMemoryCharacters(santaList);
+
+
         System.out.println("Total characters of string code minus characters in memory: " + (totalCodeChars - totalMemoryChars));
+
+
+
+        
     }
 
     private static List<String> handleInput(String filePath) {
