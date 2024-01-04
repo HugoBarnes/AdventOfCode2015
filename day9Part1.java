@@ -5,20 +5,13 @@ import java.util.regex.Pattern;
 
 public class day9Part1 {
     public static void main(String[] args) {
-
-        // build a weighted graph
-            // add all the cities to the weighted graph 
-            // find the shortest path Dijkstras
         String filePath = "C:/Users/hugos/AdventOfCode2015/AdventOfCode2015/inputs/day9Input.txt";
         List<List<String>> list = handleInput(filePath);
-        //System.out.println(list);
 
-        // Build and assign my graph:
-        Map<String, Map<String, List<Integer>>> graph = buildGraph(list);
-        System.out.println(graph);
-
-        System.out.println(nearestNeighborTour(graph));
+        Map<String, Map<String, Integer>> graph = buildGraph(list);
+        System.out.println(findLongestPath(graph));
     }
+
     public static List<List<String>> handleInput(String filePath) {
         List<List<String>> list = new ArrayList<>();
 
@@ -59,65 +52,52 @@ public class day9Part1 {
         return list;
     }
 
-    public static Map<String, Map<String, List<Integer>>> buildGraph(List<List<String>> list){
-        // make our graph:
-        Map<String, Map<String, List<Integer>>> graph = new HashMap<>();
-        
-        // for every connection in the list: connection is between two cities and has a distance
-        for(List<String> connection: list){
-            if(connection.size()!=3){
+    public static Map<String, Map<String, Integer>> buildGraph(List<List<String>> list) {
+        Map<String, Map<String, Integer>> graph = new HashMap<>();
+        for (List<String> connection : list) {
+            if (connection.size() != 3) {
                 throw new IllegalArgumentException("Each connection must have exactly 3 elements");
             }
-
-            // define all of the elements in a connection 
             String city1 = connection.get(0);
             String city2 = connection.get(1);
             int distance = Integer.parseInt(connection.get(2));
-
-            // add the data to the graphs: 
             graph.putIfAbsent(city1, new HashMap<>());
-            graph.get(city1).put(city2, new ArrayList<>());
-            graph.get(city1).get(city2).add(distance);
-
-            // add the reverse connection:
+            graph.get(city1).put(city2, distance);
             graph.putIfAbsent(city2, new HashMap<>());
-            graph.get(city2).put(city1, new ArrayList<>());
-            graph.get(city2).get(city1).add(distance);
+            graph.get(city2).put(city1, distance);
         }
-
         return graph;
     }
 
-    // nearest neighbor algorithm:
-    public static int nearestNeighborTour(Map<String, Map<String, List<Integer>>> graph) {
-        String currentCity = "Faerun";
-        Set<String> visitedCities = new HashSet<>();
-        int totalDistance = 0;
-    
-        while (visitedCities.size() < graph.size() - 1) {
-            Map<String, List<Integer>> distanceLists = graph.get(currentCity);
-            String nearestCity = null;
-            int shortestDistance = Integer.MAX_VALUE;
-    
-            for (Map.Entry<String, List<Integer>> entry : distanceLists.entrySet()) {
-                if (!visitedCities.contains(entry.getKey())) {
-                    int currentShortestDistance = Collections.min(entry.getValue());
-                    if (currentShortestDistance < shortestDistance) {
-                        shortestDistance = currentShortestDistance;
-                        nearestCity = entry.getKey();
-                    }
-                }
-            }
-    
-            if (nearestCity == null) break; // No more unvisited cities
-    
-            visitedCities.add(currentCity);
-            totalDistance += shortestDistance;
-            currentCity = nearestCity;
+    public static int findLongestPath(Map<String, Map<String, Integer>> graph) {
+        List<String> cities = new ArrayList<>(graph.keySet());
+        return permute(cities, 0, new ArrayList<>(), graph, 0);
+    }
+
+    private static int permute(List<String> cities, int k, List<String> longestPath,
+            Map<String, Map<String, Integer>> graph, int longestDistance) {
+        int currentLongest = longestDistance;
+        for (int i = k; i < cities.size(); i++) {
+            Collections.swap(cities, i, k);
+            currentLongest = Math.max(currentLongest, permute(cities, k + 1, longestPath, graph, currentLongest));
+            Collections.swap(cities, k, i);
         }
-    
+        if (k == cities.size() - 1) {
+            int currentDistance = calculateTotalDistance(cities, graph);
+            if (currentDistance > currentLongest) {
+                longestPath.clear();
+                longestPath.addAll(cities);
+                return currentDistance;
+            }
+        }
+        return currentLongest;
+    }
+
+    private static int calculateTotalDistance(List<String> path, Map<String, Map<String, Integer>> graph) {
+        int totalDistance = 0;
+        for (int i = 0; i < path.size() - 1; i++) {
+            totalDistance += graph.get(path.get(i)).get(path.get(i + 1));
+        }
         return totalDistance;
     }
-    
-    
 }
